@@ -50,11 +50,12 @@ plt.show()
 # quality of workscore calculation ( 0 - 10 )
 refined_data['Quality of Work Score'] = ((refined_data['Total Hours Worked'] - refined_data['Break Amount']) / refined_data['Total Hours Worked']) * 10
 
-# box plot for quality of workscore
-plt.figure(figure_size=(8, 6))
-plt.boxplot(refined_data['Quality of Work Score'])
-plt.title('Box Plot of Quality of Work Score')
+# bar chart for quality of workscore
+plt.figure(figsize=(10, 6))
+plt.bar(refined_data['Date'], refined_data['Quality of Work Score'], color='teal')
+plt.title('Quality of Work Score')
+plt.xlabel('Date')
 plt.ylabel('Quality of Work Score')
-plt.grid(True)
+plt.xticks(rotation=45)  # Rotate date labels for better readability
 plt.tight_layout()
 plt.show()
