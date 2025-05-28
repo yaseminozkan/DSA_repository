@@ -44,7 +44,7 @@ You can check the  [`box_plots`](box_plots) folder to see the graphs for each da
 
 ##### -> The scatterplot below shows the relationship between Caffeine Intake and Quality of Work Score. If caffeine had a direct positive effect on work quality, we would expect to see a rising linear trend due to higher caffeine leading to higher quality scores. However there is no such thing and the data points are widely scattered. This shows no meaningful linear correlation between the two variables. 
 ![image](https://github.com/yaseminozkan/DSA_repository/blob/899b0c78f4fce8ed4df26b51cf30df1846f8894f/GRAPHS/quality_vs_caffeine_trendline.png)
-
+###### chatgpt was used when generating this graph
 # Hypothesis Testing
 
 - **Null Hypothesis:** "Caffeine intake has no impact on productivity"
@@ -55,15 +55,75 @@ You can check the  [`box_plots`](box_plots) folder to see the graphs for each da
   To evaluate the hypothesis, a Pearson correlation test was applied between daily caffeine intake (in mg) and the computed quality of work score.
 ### Results
 
-#### -	Pearson Correlation Coefficient: 0.190
-#### - p-value: 0.384
-###### [`hypothesis testing is at the bottom of this* page`](Graph_codes&Hypothesis_testing.ipynb)
+```python
+from scipy.stats import pearsonr
 
-### The correlation coefficient of 0.19 suggests a very weak positive relationship between caffeine intake and quality of work. However, the p-value of 0.384 is significantly above the commonly accepted threshold of 0.05 for statistical significance. Therefore, we fail to reject the null hypothesis. This indicates that there is no statistically significant relationship between caffeine intake and quality of work score in this dataset.
+#Calculate Quality of Work Score
+cleaned_data['Quality of Work Score'] = ((refined_data['Total Hours Worked'] - refined_data['Break Amount']) / refined_data['Total Hours Worked']) * 10
+
+#Pearson correlation between Caffeine Intake and Quality of Work Score
+caffeine_intake = cleaned_data['Caffeine Intake (mg)']
+quality_of_work_score = cleaned_data['Quality of Work Score']
+
+#Perform Pearson's correlation test
+correlation, p_value = pearsonr(caffeine_intake, quality_of_work_score)
+
+#Display
+print(f"Pearson Correlation: {correlation}")
+print(f"P-value: {p_value}")
+
+#Interpret the result
+if p_value < 0.05:
+    print("Reject the null hypothesis (H₀): There is a significant relationship between caffeine intake and the Quality of Work Score.")
+else:
+    print("Fail to reject the null hypothesis (H₀): There is no significant relationship between caffeine intake and the Quality of Work Score.")
+ ``` 
+#### - Pearson Correlation Coefficient: 0.190
+#### - p-value: 0.384
+
+#### !!! The correlation coefficient of 0.19 suggests a very weak positive relationship between caffeine intake and quality of work. However, the p-value of 0.384 is significantly above the commonly accepted threshold of for statistical significance. Therefore, we fail to reject the null hypothesis. *This indicates that there is no statistically significant relationship between caffeine intake and quality of work score in this dataset.*
+
 
 # Machine Learning Techniques
 
-###   Regression
+The goal was to see whether **daily caffeine intake** alone can predict the **Quality of Work Score (QoWS)**
 
+The Machine Learning Model aims to predict Quality of Work Score only by taking caffeine intake(mg) as input. The dataset was split into training and test sets (%80 - %20). Random Forest Generator was used since it's a flexible model that works well even when the relationship between variables isn’t simple or straight. It is overalll a good choice for real-life data that might be a bit messy or unclear.
+
+***The following code was used for the Model***
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+
+# Use only caffeine intake as feature
+X = final_data[['Caffeine_Intake_mg']]
+y = final_data['Quality_of_Work_Score']
+
+# Train/Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Random Forest Model
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+# Evaluation
+rmse = mean_squared_error(y_test, y_pred, squared=False)
+mae = mean_absolute_error(y_test, y_pred)
+```
+
+ Results
+	**- RMSE: 5.59**
+	**-	MAE: 3.98**
+
+These values indicate a *high prediction error*, suggesting that caffeine intake alone does not sufficiently explain the variance in Quality of Work Score. Same as the Hypothesis Testing results. 
+The following graph visualizes this; the points are scattered away from the diagonal line. 
+![image](https://github.com/yaseminozkan/DSA_repository/blob/1f480362b31890598050da8de8dd6f33d65fabf8/GRAPHS/Actual%20vs.%20Predicted%20QoWS%20(Caffeine%20Only%20Model).png)
+###### chatgpt was used when generating this graph
+
+# Conclusion
+
+!!! Even though caffeine is often assumed to improve work performance, this model’s weak predictive power reinforces that other behavioral factors (such as sleep, breaks, or time of day) might play a more important role. The high RMSE and MAE values support the earlier finding that *no significant linear relationship exists between caffeine and productivity.*
 
   
