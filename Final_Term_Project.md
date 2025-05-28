@@ -124,6 +124,6 @@ The following graph visualizes this; the points are scattered away from the diag
 
 # Conclusion
 
-!!! Even though caffeine is often assumed to improve work performance, this model’s weak predictive power reinforces that other behavioral factors (such as sleep, breaks, or time of day) might play a more important role. The high RMSE and MAE values support the earlier finding that *no significant linear relationship exists between caffeine and productivity.*
+!!! Even though caffeine is often assumed to improve work performance, the model’s weak predictive power reinforces that other behavioral factors (such as sleep, breaks, or time of day) might play a more important role. The high RMSE and MAE values support the earlier finding that *no significant linear relationship exists between caffeine and productivity.* 
 
-  
+
