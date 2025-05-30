@@ -122,8 +122,14 @@ The following graph visualizes this; the points are scattered away from the diag
 ![image](https://github.com/yaseminozkan/DSA_repository/blob/1f480362b31890598050da8de8dd6f33d65fabf8/GRAPHS/Actual%20vs.%20Predicted%20QoWS%20(Caffeine%20Only%20Model).png)
 ###### chatgpt was used when generating this graph
 
-# Conclusion
-
 !!! Even though caffeine is often assumed to improve work performance, the model’s weak predictive power reinforces that other behavioral factors (such as sleep, breaks, or time of day) might play a more important role. The high RMSE and MAE values support the earlier finding that *no significant linear relationship exists between caffeine and productivity.* 
 
+# Conclusion
 
+At the beginning of this project, I wanted to find out if caffeine really helps improve productivity or if it’s just something we believe because we’re used to hearing it. I tracked my own daily habits and tried to measure productivity through a score; the Quality of Work Score which is based on how long I worked and how many breaks I took.
+
+After analyzing the data and running some tests, I found that there wasn’t any strong connection between how much caffeine I had and how productive I was. The Pearson correlation was pretty weak (0.19), and the p-value was way above the significance level, so statistically, there’s no reason to think caffeine made a difference.
+
+I also trained a machine learning model (Random Forest) to see if caffeine intake could predict my work quality. The results weren’t great. The prediction errors (RMSE and MAE) were quite high, meaning caffeine alone wasn’t enough to guess how well I’d work that day.
+
+In short, even though we often think caffeine boosts our performance, my data didn’t support that idea. It’s probably more complicated than that: things like sleep, stress, or even the type of task I was doing may have had a much bigger effect than just caffeine. So, at least for me, caffeine wasn’t a productivity booster.
